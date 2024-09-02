@@ -22,3 +22,12 @@ Here, you'll find my solutions to a variety of LeetCode problems, ranging from e
 - Bit Manipulation
 - And More!
 
+## 💡 How to Use
+
+1. **Clone the Repo:** `git clone https://github.com/ImamKhan2/leetcode-problems.git`
+2. **Navigate to a Problem:** Go to the respective difficulty folder and open the problem file.
+3. **Run the Code:** Execute the solution in your preferred IDE or terminal.
+
+## 🚧 Work In Progress
+
+This repository is a work in progress, and I’m constantly adding new solutions. If you have suggestions or find a better approach to a problem, feel free to open an issue or submit a pull request!

@@ -8,8 +8,9 @@ Detailed Explanations: Each solution includes a breakdown of the approach, time 
 Continuously Updated: I'm always solving new problems, so keep checking back for the latest updates!
 
 📚 Problems Covered
+<b>
 <br>
-Arrays & Strings
+Arrays & Strings<br>
 Linked Lists
 Trees & Graphs
 Dynamic Programming

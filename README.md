@@ -8,11 +8,11 @@ Detailed Explanations: Each solution includes a breakdown of the approach, time 
 Continuously Updated: I'm always solving new problems, so keep checking back for the latest updates!
 
 📚 Problems Covered
-Arrays & Strings
-Linked Lists
-Trees & Graphs
-Dynamic Programming
-Backtracking
-Greedy Algorithms
-Bit Manipulation
+Arrays & Strings,
+Linked Lists,
+Trees & Graphs,
+Dynamic Programming,
+Backtracking,
+Greedy Algorithms,
+Bit Manipulation,
 And More!

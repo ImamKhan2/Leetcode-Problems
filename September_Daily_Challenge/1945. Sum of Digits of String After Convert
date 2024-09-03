@@ -1,0 +1,28 @@
+class Solution {
+    public int getLucky(String s, int k) {
+        int sum=0;
+        for(char ch: s.toCharArray()){
+            int convert = ch -'a' +1;
+            while(convert>0){
+                sum+= convert%10; // Add the last digit to sum
+                convert/=10; // Remove the last digit or get the first digit
+            }
+        }
+
+        while(k>1){
+           int newsum=0;// Always initialize sum=0 at start bcoz at every new iteration it should be 0
+           // Calculate the sum of the digits of the current sum
+           while(sum>0){
+            newsum+= sum%10; // Add the last digit of sum to newsum
+            sum/=10; // Remove the last digit from sum
+           }
+           // Update sum with newsum and decrement k
+            k--;
+            sum=newsum;
+        }
+        return sum;
+    }
+}
+
+// TC O(N+Log(K))
+// SC O(1)

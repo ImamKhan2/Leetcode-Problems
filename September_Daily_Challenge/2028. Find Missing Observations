@@ -1,0 +1,44 @@
+class Solution {
+    public int[] missingRolls(int[] rolls, int mean, int n) {
+        int m = rolls.length;
+        // Calculate the total sum of the known rolls
+        int sum=0;
+        for(int i=0;i<m;i++){
+            sum+=rolls[i];
+        }
+
+        // Calculate the sum required for the missing rolls to achieve the desired mean
+        // The total number of rolls (m + n) must have an average equal to 'mean'.
+        // So, total sum should be mean * (m + n).
+        // The missing sum is the difference between the required total sum and the sum of known rolls.
+        int missingSum= (mean*(m+n))-sum;
+
+        // If the missing sum is less than n or greater than 6*n, it's impossible to distribute it
+        // because each die roll must be between 1 and 6.
+        if(missingSum<n || missingSum>6*n)
+        return new int[]{}; // Return an empty array when a solution is not possible.
+
+        // Create an array to store the missing rolls
+        int ans[] = new int [n];
+        // Calculate the average value for the missing rolls
+        int average = missingSum/n;
+        // Calculate the remainder that needs to be distributed
+        int remainder = missingSum%n;
+
+        // Distribute the average and remainder values across the array
+        for(int i=0;i<n;i++){
+            // Assign the average value to each roll
+            ans[i]= average;
+
+            // Distribute the remainder by adding 1 to the first 'remainder' number of rolls
+            if(remainder>0)
+            ans[i]++;
+            remainder--;
+        }
+        // Return the resulting array of missing rolls
+        return ans;
+    }
+}
+
+TC O(m+n)
+SC O(n)

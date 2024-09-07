@@ -1,0 +1,53 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    // Main function to check if there is a subpath that matches the linked list
+    public boolean isSubPath(ListNode head, TreeNode root) {
+        // If the binary tree is empty, no path can match
+        if(root==null)
+        return false;
+
+        // Try to match the linked list starting from the current node or from the left or right subtrees
+        return dfs(root, head) || isSubPath(head, root.left) || isSubPath(head, root.right);
+    }
+
+    // DFS function to check if a linked list matches the current downward path in the tree
+    private boolean dfs(TreeNode root, ListNode head){
+        // If the linked list is fully matched, return true
+        if(head==null)
+        return true;
+
+        // If the binary tree node is null or values don't match, return false
+        if(root==null || root.val!= head.val)
+        return false;
+
+        // Recursively check the left and right subtrees with the next node in the linked list
+        return dfs(root.left, head.next) || dfs(root.right, head.next);
+    }  
+}
+
+TC O(m*n)
+SC O(m+n)

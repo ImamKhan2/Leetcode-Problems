@@ -1,0 +1,29 @@
+import java.util.Arrays;
+
+class Solution {
+    public int matchPlayersAndTrainers(int[] players, int[] trainers) {
+        // Step 1: Sort both the players' abilities and the trainers' capacities
+        Arrays.sort(players);
+        Arrays.sort(trainers);
+
+        int i = 0; // Pointer for players && To keep track of the number of matchings
+        int j = 0; // Pointer for trainersings
+
+        // Step 2: Use two pointers to find the maximum number of matchings
+        while (i < players.length && j < trainers.length) {
+            // If the current player can be matched with the current trainer
+            if (players[i] <= trainers[j]) {
+                
+                i++;     // Move to the next player && A match is found, increment the count
+            }
+            // Whether a match is found or not, move to the next trainer
+            j++;
+        }
+
+        // Step 3: Return the number of matchings
+        return i;
+    }
+}
+
+// TC O(nlogn + mlogm)
+// SC O(1)

@@ -1,0 +1,47 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    // Method to insert GCDs between every two consecutive nodes of a linked list
+    public ListNode insertGreatestCommonDivisors(ListNode head) {
+        // Start by initializing 'temp' to the head of the list
+        ListNode temp = head;
+
+        // Loop through the list, but stop when 'temp' or 'temp.next' is null,
+        // as we need to process pairs of nodes (current and next node)
+        while (temp != null && temp.next != null) {
+            // Compute the GCD of the current node's value and the next node's value
+            int gcdValue = gcd(temp.val, temp.next.val);
+
+            // Create a new node with the GCD value
+            ListNode newNode = new ListNode(gcdValue);
+
+            // Insert this new node between the current node and the next node
+            newNode.next = temp.next;  // Link the new node to the next node
+            temp.next = newNode;       // Link the current node to the new node
+
+            // Move the 'temp' pointer two nodes forward (skipping the newly inserted node)
+            temp = newNode.next;
+        }
+        return head;  // Return the modified list
+    }
+
+    // Helper method to compute the GCD of two numbers using the Euclidean algorithm
+    private int gcd(int a, int b) {
+        // Base case: if 'b' is 0, GCD is 'a'
+        if (b == 0) return a;
+
+        // Recursive step: GCD of (b, a % b)
+        return gcd(b, a % b);
+    }
+}
+
+// TC O(n * log(max_value))
+// SC O(n)

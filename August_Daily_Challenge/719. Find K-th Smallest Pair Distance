@@ -1,0 +1,41 @@
+class Solution {
+    public int smallestDistancePair(int[] nums, int k) {
+        // Step 1: Sort the array
+        Arrays.sort(nums);
+
+        // Step 2: Binary search on the distance
+        int low = 0;
+        int high = nums[nums.length - 1] - nums[0];
+
+        while (low < high) {
+            int mid = (low + high) / 2;
+            // Count the number of pairs with distance <= mid
+            int count = countPairsWithDistanceLessOrEqual(nums, mid);
+
+            if (count >= k) {
+                high = mid;  // If count is greater than or equal to k, move high to mid
+            } else {
+                low = mid + 1;  // Otherwise, move low to mid + 1
+            }
+        }
+
+        return low;  // When low equals high, we've found the k-th smallest distance
+    }
+
+    private int countPairsWithDistanceLessOrEqual(int[] nums, int dist) {
+        int count = 0;
+        int left = 0;
+
+        // Two-pointer technique to count pairs with distance <= dist
+        for (int right = 0; right < nums.length; right++) {
+            // While the difference between nums[right] and nums[left] is greater than dist, move left pointer
+            while (nums[right] - nums[left] > dist) {
+                left++;
+            }
+            // Number of pairs with nums[right] that have distance <= dist
+            count += right - left;
+        }
+
+        return count;
+    }
+}

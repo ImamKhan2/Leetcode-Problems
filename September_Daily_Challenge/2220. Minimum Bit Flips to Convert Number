@@ -1,0 +1,54 @@
+class Solution {
+    public int minBitFlips(int start, int goal) {
+
+        //Method 1
+        // int count=0;
+        // int ans=start^goal;  // xor gives us the different bit (set bit or no. of 1's represent different bit)
+        // String bin = Integer.toBinaryString(ans); // Convert it to Binary String
+        // for(int i=0;i<bin.length();i++){ // Calculate number of 1's
+        //     if(bin.charAt(i)=='1')
+        //     count++;
+        // }
+        
+        // Method 2
+        // XOR operation between start and goal
+        // int xor = start ^ goal;
+        
+        // Count the number of 1s in the result of XOR
+        // int count = 0;
+        
+        // Iterate through the bits of XOR
+        // while (xor != 0) {
+        //     count += xor & 1;  // Add 1 if the current bit is 1
+        //     xor >>= 1;         // Right shift to process the next bit
+        // }
+        
+
+    // Method 3 brian kernighan's algorithm 
+    // XOR operation between start and goal
+    // This gives us a binary number where bits are set to 1 if the corresponding
+    // bits of start and goal differ, and 0 if they are the same.
+    int ans = start ^ goal;
+
+    // This will count the number of differing bits (i.e., the number of 1s in 'ans').
+    int count = 0;
+
+    // Loop until all the bits of 'ans' have been processed.
+    // We keep flipping the lowest set bit (1) to 0 and increment the count.
+    while(ans > 0) {
+        // 'ans & (ans - 1)' removes the lowest set bit from 'ans'.
+        // For example, if ans is 10100, then ans - 1 is 10011, and performing
+        // 'ans & (ans - 1)' changes the lowest set bit from 1 to 0, resulting in 10000.
+        ans = ans & (ans - 1);
+
+        // Increment the count for each removed set bit.
+        count++;
+    }
+
+    // Return the total number of differing bits, which is the number of bit flips needed.
+    return count;
+}
+}
+
+// TC O(k), where k is the number of bits set to 1 in the XOR result.
+// SC O(1)

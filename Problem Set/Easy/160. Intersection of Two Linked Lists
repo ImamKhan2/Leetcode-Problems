@@ -1,0 +1,28 @@
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode a = headA;
+        ListNode b = headB;
+
+        // Loop until both pointers point to the same node (which could be the intersection or both null)
+        while(a!=b){
+        if(a==null && b==null){
+            return null;
+        // If pointer a reaches the end of list A, redirect it to the head of list B
+        // This is to traverse both lists fully, compensating for differing lengths
+        }else if(a==null){
+            a = headB;
+        // If pointer b reaches the end of list B, redirect it to the head of list A
+        // This is to ensure that both pointers traverse both lists
+        }else if(b==null){
+            b = headA;
+        }else{
+            a=a.next; // If pointer a is not null, move to the next node in list A
+            b=b.next; // If pointer b is not null, move to the next node in list B
+        }
+        }
+        return b;   // or u can return a
+    }
+}
+
+// TC O(n+m)
+// SC O(1)

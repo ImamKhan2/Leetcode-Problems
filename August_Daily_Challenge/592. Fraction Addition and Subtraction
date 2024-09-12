@@ -1,0 +1,41 @@
+class Solution {
+    public String fractionAddition(String expression) {
+        // Split the input string into individual fractions based on the '+' or '-' signs
+        String frs[] = expression.split("(?=[+-])");
+        
+        // Initialize the numerator as 0 and the denominator as 1
+        long num = 0, den = 1;
+
+        // Iterate over each fraction string
+        for (String fr : frs) {
+            // Split the fraction string into numerator and denominator
+            String[] curr = fr.split("/");
+            long a = Long.parseLong(curr[0]); // Parse the numerator
+            long b = Long.parseLong(curr[1]); // Parse the denominator
+            
+            // Update the cumulative numerator and denominator
+            num = num * b + a * den;
+            den = den * b;
+        }
+
+        // If the numerator is zero, return "0/1"
+        if (num == 0) return "0/1";
+        
+        // Calculate the greatest common divisor (GCD) of the numerator and denominator
+        long gcd = gcd(Math.abs(num), Math.abs(den));
+        
+        // Simplify the fraction by dividing both numerator and denominator by their GCD
+        num /= gcd;
+        den /= gcd;
+        
+        // Return the simplified fraction as a string
+        return num + "/" + den;
+    }
+
+    // Helper method to compute the greatest common divisor (GCD) using subtraction
+    private long gcd(long a, long b) {
+        if (a == b) return a;
+        if (a > b) return gcd(a - b, b);
+        return gcd(a, b - a);
+    }
+}

@@ -1,0 +1,43 @@
+class Solution {
+    public String nearestPalindromic(String n) {
+        int index=n.length()/2; // mid value
+        boolean even=n.length()%2==0; // for even 
+        if(even) index-=1; //if even index-1;
+        long leftPart=Long.parseLong(n.substring(0,index+1));
+        //5 cases 
+        List<Long> cases=new ArrayList<>();
+        //converting ending digits to staring digits
+        cases.add(getPalindrome(leftPart,even));
+        //incrementing middle
+        cases.add(getPalindrome(leftPart+1,even)); //take one incremented value
+        //decrementing middle
+        cases.add(getPalindrome(leftPart-1,even));//take one decremented value
+        //reduce digits by 1
+        cases.add((long)Math.pow(10,n.length()-1)-1); 
+        //increase digits by 1
+        cases.add((long)Math.pow(10,n.length())+1);
+
+        long result=0, diff=Integer.MAX_VALUE , num=Long.parseLong(n);
+        for(long c:cases){
+            if(c==num) continue; //if already pallindrome then skip
+            long curr=Math.abs(num-c); //difference
+            if(diff>curr){
+                result=c;
+                diff=curr;
+            }else if(diff==curr){
+                result=Math.min(result,c); //if same difference take the minimum one
+            }
+        }
+        return String.valueOf(result);
+
+    }
+    private long getPalindrome(long leftPart, boolean even){
+        long result=leftPart;
+        if(!even) leftPart/=10; // if it is odd divide by 10
+        while(leftPart>0){
+            result=(result*10)+(leftPart%10);
+            leftPart/=10;
+        }
+        return result;
+    }
+}

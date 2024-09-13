@@ -1,0 +1,38 @@
+class Solution {
+    public int[] xorQueries(int[] arr, int[][] queries) {
+        int n = arr.length;    // Get the length of the input array
+        int[] prefix = new int[n];   // Create a prefix array to store cumulative XOR values
+
+        // Initialize the first element of the prefix array to the first element of arr
+        prefix[0] = arr[0];
+
+        // Compute the prefix XOR array, where each element at index i
+        // represents the XOR of all elements from arr[0] to arr[i]
+        for (int i = 1; i < n; i++) {
+            prefix[i] = prefix[i-1] ^ arr[i];
+        }
+
+        // Create the result array to store the XOR results for each query
+        int[] result = new int[queries.length];
+
+        // Iterate through each query
+        for (int i = 0; i < queries.length; i++) {
+            int j = queries[i][0];  // Get the start index of the query
+            int k = queries[i][1];  // Get the end index of the query
+
+            // If the query starts from the beginning (j == 0), the result is just the prefix[k]
+            if (j == 0) {
+                result[i] = prefix[k];
+            } else {
+                // Otherwise, the result is the XOR of prefix[k] and prefix[j-1]
+                // This gives the XOR of the subarray arr[j] to arr[k]
+                result[i] = prefix[k] ^ prefix[j-1];
+            }
+        }
+
+        return result;  // Return the result array with the XOR for each query
+    }
+}
+
+// TC O(n+m)
+// SC O(n+m)

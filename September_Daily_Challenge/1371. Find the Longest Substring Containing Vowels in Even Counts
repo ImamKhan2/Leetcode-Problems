@@ -1,0 +1,38 @@
+class Solution {
+    public int findTheLongestSubstring(String s) {
+         // 'xor' will track the parity of the vowels (even or odd count)
+        int xor = 0, ans = 0;
+        
+        // HashMap to store the first occurrence of each xor state
+        Map<Integer, Integer> map = new HashMap<>();
+        
+        // Initial state: no vowels seen, represented by xor = 0 at index -1
+        map.put(0, -1);
+        
+        // Iterate through the string
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            
+            // Check if the current character is a vowel
+            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+                // XOR the vowel character to track even/odd occurrences
+                xor ^= c;
+            }
+
+            // Check if this xor state has been seen before
+            if (map.containsKey(xor)) {
+                // If seen, calculate the length of the substring between the first occurrence and the current index
+                ans = Math.max(ans, i - map.get(xor));
+            } else {
+                // If not seen, store the current xor state and the index
+                map.put(xor, i);
+            }
+        }
+        
+        // Return the length of the longest valid substring
+        return ans;
+    }
+}
+
+// TC O(n)
+// SC O(n)

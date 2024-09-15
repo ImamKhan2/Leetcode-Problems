@@ -1,0 +1,36 @@
+class Solution {
+    public int equalPairs(int[][] grid) {
+     int n = grid.length;  // Get the size of the matrix (n x n)
+        int count = 0;        // This variable will hold the number of matching row-column pairs
+        
+        // Outer loop: Iterate over all rows
+        for (int i = 0; i < n; i++) {
+            // Inner loop: For each row, iterate over all columns
+            for (int j = 0; j < n; j++) {
+                // Compare the i-th row with the j-th column
+                if (isEqual(grid, i, j, n)) {
+                    count++;  // If they are equal, increment the count
+                }
+            }
+        }
+        
+        // Return the total count of equal row-column pairs
+        return count;
+    }
+    
+    // Helper function to compare the i-th row with the j-th column
+    private boolean isEqual(int[][] grid, int row, int col, int n) {
+        // Loop to compare elements in the i-th row and j-th column
+        for (int k = 0; k < n; k++) {
+            // If any element in the row does not match the corresponding element in the column, return false
+            if (grid[row][k] != grid[k][col]) {
+                return false;
+            }
+        }
+        // If all elements match, return true
+        return true;
+    }
+}
+
+// TC O(n^3)
+// SC O(1)

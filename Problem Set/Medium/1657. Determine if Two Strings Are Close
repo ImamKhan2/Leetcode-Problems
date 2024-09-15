@@ -1,0 +1,49 @@
+class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        // Check if the lengths of the two strings are different.
+        // If the lengths are different, the strings cannot be "close".
+        if (word1.length() != word2.length()) {
+            return false;
+        }
+
+        // Initialize frequency arrays for both words.
+        // These arrays will store the frequency of each letter in the alphabet for word1 and word2.
+        int[] f1 = new int[26]; // Frequency array for word1
+        int[] f2 = new int[26]; // Frequency array for word2
+
+        // Fill the frequency array for word1.
+        // For each character in word1, increment the corresponding index in f1.
+        for (char ch : word1.toCharArray()) {
+            f1[ch - 'a']++; // 'a' corresponds to index 0, 'b' to index 1, etc.
+        }
+
+        // Fill the frequency array for word2.
+        // For each character in word2, increment the corresponding index in f2.
+        for (char ch : word2.toCharArray()) {
+            f2[ch - 'a']++;
+        }
+
+        // Check if both words have the same unique characters.
+        // This means if one word has a character with frequency > 0 but the other doesn't, they cannot be "close".
+    
+        // Loop through each index of the frequency arrays.
+        for (int i = 0; i < 26; i++) {
+            // If word1 contains a character that word2 does not, or vice versa, return false.
+            if ((f1[i] == 0 && f2[i] != 0) || (f1[i] != 0 && f2[i] == 0)) {
+                return false;
+            }
+        }
+
+        // Sort both frequency arrays.
+        // Sorting ensures that even if the frequencies appear in different orders, we can compare them properly.
+        Arrays.sort(f1);
+        Arrays.sort(f2);
+
+        // After sorting, compare the frequency arrays.
+        // If they are equal, it means the words can be transformed into each other.
+        return Arrays.equals(f1, f2);
+    }
+}
+
+// TC O(n)
+// SC O(1)

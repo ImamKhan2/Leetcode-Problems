@@ -1,0 +1,49 @@
+public class Solution {
+    public int countSubIslands(int[][] grid1, int[][] grid2) {
+        int m = grid1.length;
+        int n = grid1[0].length;
+        int count = 0;
+        
+        // Traverse grid2 and find all islands
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                // If we find a piece of land in grid2 that hasn't been visited
+                if (grid2[i][j] == 1) {
+                    // Check if this island is a sub-island
+                    if (dfs(grid1, grid2, i, j)) {
+                        count++;
+                    }
+                }
+            }
+        }
+        
+        return count;
+    }
+    
+    private boolean dfs(int[][] grid1, int[][] grid2, int i, int j) {
+        int m = grid1.length;
+        int n = grid1[0].length;
+        
+        // If the cell is out of bounds or water in grid2, return true
+        if (i < 0 || i >= m || j < 0 || j >= n || grid2[i][j] == 0) {
+            return true;
+        }
+        
+        // Mark the cell as visited in grid2
+        grid2[i][j] = 0;
+        
+        // Check if the corresponding cell in grid1 is land. If it's water, it's not a sub-island.
+        boolean isSubIsland = grid1[i][j] == 1;
+        
+        // Explore all 4 directions (up, down, left, right)
+        isSubIsland &= dfs(grid1, grid2, i + 1, j);
+        isSubIsland &= dfs(grid1, grid2, i - 1, j);
+        isSubIsland &= dfs(grid1, grid2, i, j + 1);
+        isSubIsland &= dfs(grid1, grid2, i, j - 1);
+        
+        return isSubIsland;
+    }
+}
+
+// TC O(m*n)
+// SC O(m*n)

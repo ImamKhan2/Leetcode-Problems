@@ -1,0 +1,33 @@
+class Solution {
+    public int minimumSwap(String s1, String s2) {
+        // Initialize counters for "xy" and "yx" mismatches
+        int xyCount = 0;
+        int yxCount = 0;
+        
+        // Traverse both strings
+        for (int i = 0; i < s1.length(); i++) {
+            char c1 = s1.charAt(i);
+            char c2 = s2.charAt(i);
+            
+            if (c1 == 'x' && c2 == 'y') {
+                xyCount++;
+            } else if (c1 == 'y' && c2 == 'x') {
+                yxCount++;
+            }
+        }
+        
+        // If the total number of mismatches is odd, it's impossible to fix
+        if ((xyCount + yxCount) % 2 != 0) {
+            return -1;
+        }
+        
+        // Each pair of "xy" or "yx" mismatches can be swapped in 1 operation
+        // If there's one extra "xy" and one extra "yx", we need 2 more swaps
+        int ans = (xyCount / 2) + (yxCount / 2) + 2 * (xyCount % 2);
+        
+        return ans;
+    }
+}
+
+// TC O(n)
+// SC O(1)

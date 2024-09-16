@@ -3,7 +3,7 @@ class Solution {
     public int findMinDifference(List<String> timePoints) {
         // // Step 1: Create an array to store the time in minutes
         // int[] minutes = new int[timePoints.size()]; // This array will store the times in minutes
-        
+
         // // Step 2: Convert each time point from "HH:MM" format to minutes
         // for(int i = 0; i < timePoints.size(); i++) {
         //     String time = timePoints.get(i);  // Get the current time in "HH:MM" format

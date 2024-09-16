@@ -1,0 +1,86 @@
+class Solution {
+    // Function to find the minimum time difference between any two time points
+    public int findMinDifference(List<String> timePoints) {
+        // // Step 1: Create an array to store the time in minutes
+        // int[] minutes = new int[timePoints.size()]; // This array will store the times in minutes
+        
+        // // Step 2: Convert each time point from "HH:MM" format to minutes
+        // for(int i = 0; i < timePoints.size(); i++) {
+        //     String time = timePoints.get(i);  // Get the current time in "HH:MM" format
+        //     int h = Integer.parseInt(time.substring(0, 2)); // Extract the hours and convert to integer
+        //     int m = Integer.parseInt(time.substring(3)); // Extract the minutes and convert to integer
+        //     minutes[i] = h * 60 + m; // Convert the time to total minutes (h * 60 + m) and store it
+        // }
+
+        // // Step 3: Sort the array of times in ascending order (in terms of minutes)
+        // Arrays.sort(minutes);
+
+        // // Step 4: Initialize a variable to store the minimum time difference
+        // int ans = Integer.MAX_VALUE; // Set the initial minimum difference to the largest possible value
+
+        // // Step 5: Calculate the difference between consecutive time points
+        // for(int i = 0; i < minutes.length - 1; i++) {
+        //     // Find the difference between consecutive times and update the minimum difference
+        //     ans = Math.min(ans, minutes[i + 1] - minutes[i]);
+        // }
+
+        // // Step 6: Handle the circular nature of the clock (e.g., difference between the last and the first time)
+        // // Compare the current minimum difference with the difference between the first and last times in a 24-hour clock
+        // return Math.min(ans, 24 * 60 - minutes[minutes.length - 1] + minutes[0]);
+
+        // TC O(nlogn)
+        // SC O(n)
+
+       // METHOD 2 BUCKET SORT
+
+        // Step 1: Create a boolean array to mark minutes in a 24-hour day (1440 minutes = 24*60)
+    boolean[] minutes = new boolean[24 * 60]; // Each index represents a minute in a 24-hour day
+
+    // Step 2: Convert each time point to minutes and mark it in the boolean array
+    for (String time : timePoints) {
+        // Convert the time from "HH:MM" format to minutes
+        int min = Integer.parseInt(time.substring(0, 2)) * 60 + Integer.parseInt(time.substring(3));
+        
+        // If the minute is already marked (duplicate time), return 0 (minimum possible difference)
+        if (minutes[min])
+            return 0;
+        
+        // Mark the minute as true (indicating this time exists)
+        minutes[min] = true;
+    }
+
+    // Step 3: Initialize variables for tracking the previous, first, and last time points in minutes
+    int prevIndex = Integer.MAX_VALUE; // To store the previous time point in minutes
+    int firstIndex = Integer.MAX_VALUE; // To store the first (smallest) time point
+    int lastIndex = Integer.MAX_VALUE; // To store the last (largest) time point
+    int ans = Integer.MAX_VALUE; // To store the minimum difference between time points
+
+    // Step 4: Traverse the boolean array to find the time points and calculate differences
+    for (int i = 0; i < 24 * 60; i++) { // Loop through each minute of the day
+        if (minutes[i]) { // If this minute has a time point marked
+            // If this is not the first time point, calculate the difference from the previous one
+            if (prevIndex != Integer.MAX_VALUE) {
+                ans = Math.min(ans, i - prevIndex); // Update the minimum difference
+            }
+            prevIndex = i; // Update the previous time point to the current one
+            
+            // If it's the first time point found, record it
+            if (firstIndex == Integer.MAX_VALUE) {
+                firstIndex = i;
+            }
+            
+            // Always update the lastIndex as this will be the largest time point found
+            lastIndex = i;
+        }
+    }
+
+    // Step 5: Handle the circular nature of the clock (across midnight)
+    // Compare the minimum difference with the difference between the last and first time point
+    return Math.min(ans, 24 * 60 - lastIndex + firstIndex);
+    }
+}
+
+// TC O(n)
+// SC (1)
+
+

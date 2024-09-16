@@ -1,0 +1,42 @@
+class Solution {
+    public String removeStars(String s) {
+        // Instead of using a Stack, we use a StringBuilder to efficiently modify the string.
+        StringBuilder ans = new StringBuilder();
+
+        // Loop through each character in the input string
+        for(char ch : s.toCharArray()) {
+            if(ch == '*') {
+                // If the character is a star ('*'), we remove the last character appended to the result
+                // This simulates removing the closest non-star character to the left of the star
+                ans.deleteCharAt(ans.length() - 1);
+            } else {
+                // If it's not a star, we append the character to the result
+                ans.append(ch);
+            }
+        }
+        
+        // Convert the StringBuilder back to a String and return the result
+        return ans.toString();
+
+        // Method 2
+        // int n=s.length();
+        // int count=0;
+        // StringBuilder str=new StringBuilder();
+        // for(int i=n-1;i>=0;i--){
+        //     char c=s.charAt(i);
+        //     if(c == '*')
+        //     {
+        //         count++;
+        //     }else{
+        //         if(count > 0){
+        //             count--;
+        //         }else
+        //             str.append(c);
+        //     }
+        // }
+        // return str.reverse().toString();
+    }
+}
+
+// TC O(n)
+// SC O(n)

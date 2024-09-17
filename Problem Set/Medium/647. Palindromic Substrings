@@ -1,0 +1,39 @@
+public class Solution {
+    // Method to count the number of palindromic substrings in the given string `s`
+    public int countSubstrings(String s) {
+        // Handle the edge case where the input string is null or empty
+        if (s == null || s.length() == 0) {
+            return 0; // No palindromic substrings in an empty or null string
+        }
+
+        int count = 0; // Initialize count to keep track of palindromic substrings
+
+        // Loop through each character in the string
+        for (int i = 0; i < s.length(); i++) {
+            // Check for odd-length palindromes centered at index `i`
+            count += helper(s, i, i);
+            // Check for even-length palindromes centered between indices `i` and `i+1`
+            count += helper(s, i, i + 1);
+        }
+
+        return count; // Return the total number of palindromic substrings found
+    }
+
+    // Helper method to count palindromic substrings expanding around the center defined by `left` and `right`
+    private static int helper(String s, int left, int right) {
+        int count = 0; // Initialize count for this particular center
+
+        // Expand around the center as long as the expanded substring is a palindrome
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            count++; // Increment count for each valid palindrome found
+            left--;  // Move the left pointer outward
+            right++; // Move the right pointer outward
+        }
+
+        return count; // Return the number of palindromic substrings found for this center
+    }
+}
+
+
+// TC O(n^2)
+// SC O(1)

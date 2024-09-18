@@ -1,0 +1,26 @@
+class Solution {
+    public int maximumWealth(int[][] accounts) {
+        int m = 0;  // Initialize a variable `m` to store the maximum wealth found.
+
+        // Outer loop: Iterate over each customer
+        for (int i = 0; i < accounts.length; i++) {
+            int c = 0;  // Initialize a variable `c` to store the current customer's wealth.
+
+            // Inner loop: Sum up all the money the current customer has in all their bank accounts
+            for (int j = 0; j < accounts[i].length; j++) {
+                c += accounts[i][j];  // Add the money from the `j`-th bank account to `c`.
+            }
+        
+            // After summing up all accounts for customer `i`, check if their wealth `c` is greater than the current max `m`.
+            if (m < c) {
+                m = c;  // Update `m` to the new maximum wealth if `c` is greater.
+            }
+        }
+
+        // Return the maximum wealth found.
+        return m;
+    }
+}
+
+TC O(m*n)
+SC O(1)

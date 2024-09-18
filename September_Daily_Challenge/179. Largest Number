@@ -1,0 +1,37 @@
+class Solution {
+    public String largestNumber(int[] nums) {
+        
+         // Step 1: Convert the array of integers to an array of strings
+        // This is necessary because we will need to concatenate numbers in string format
+        String[] str = new String[nums.length];
+        for(int i = 0; i < nums.length; i++) {
+            str[i] = String.valueOf(nums[i]);  // Convert each integer to a string
+            // You can also use
+            // str[i] = Integer.toString(nums[i]); 
+        }
+
+        // Step 2: Sort the array of strings using a custom comparator
+        // The comparator compares two strings by their concatenated values in both orders (a+b and b+a)
+        // If (b+a) is greater than (a+b), then b should come before a in the sorted order
+        Arrays.sort(str, (a, b) -> (b + a).compareTo(a + b));
+
+        // Step 3: Edge case - if the largest element is "0", return "0"
+        // This handles cases where all numbers are zero (e.g., [0, 0, 0])
+        // After sorting, if the largest element is "0", we return "0" instead of "000..."
+        if (str[0].equals("0")) {
+            return "0";
+        }
+
+        // Step 4: Build the largest number by concatenating the sorted strings
+        StringBuilder ans = new StringBuilder();
+        for (String num : str) {
+            ans.append(num);  // Append each string from the sorted array to the result
+        }
+
+        // Step 5: Return the concatenated result as a string
+        return ans.toString();
+    }
+}
+
+// TC O(nlogn)
+// SC O(n + S)

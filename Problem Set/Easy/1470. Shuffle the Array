@@ -1,0 +1,24 @@
+class Solution {
+    public int[] shuffle(int[] nums, int n) {
+        int ans[] = new int[nums.length];  // Create an array 'ans' to store the result
+        int i = 0;  // Pointer for the first half of 'nums'
+        int j = n;  // Pointer for the second half of 'nums'
+        int k = 0;  // Pointer for 'ans' array
+
+        // Loop until the second pointer 'j' reaches the end of 'nums'
+        while (j < nums.length) {
+            ans[k] = nums[i];  // Take element from the first half
+            i++;
+            k++;
+
+            ans[k] = nums[j];  // Take element from the second half
+            j++;
+            k++;
+        }
+
+        return ans;  // Return the shuffled array
+    }
+}
+
+TC O(n)
+SC O(n)

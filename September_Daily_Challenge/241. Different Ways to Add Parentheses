@@ -1,0 +1,44 @@
+class Solution {
+    public List<Integer> diffWaysToCompute(String expression) {
+        // Create an empty list to store the possible results
+        List<Integer> ans = new ArrayList<>();
+        
+        // Loop through each character in the expression string
+        for(int i = 0; i < expression.length(); i++) {
+            char c = expression.charAt(i);
+            
+            // If the character is an operator ('+', '-', or '*')
+            if(c == '+' || c == '-' || c == '*') {
+                // Split the expression into two parts: left and right
+                String left = expression.substring(0, i);
+                String right = expression.substring(i + 1);
+                
+                // Recursively compute the results for the left and right parts
+                List<Integer> leftans = diffWaysToCompute(left);
+                List<Integer> rightans = diffWaysToCompute(right);
+                
+                // Combine the results from the left and right parts
+                for(int x : leftans) {
+                    for(int y : rightans) {
+                        // Apply the operator between each pair of left and right results
+                        if(c == '+') {
+                            ans.add(x + y);
+                        } else if(c == '-') {
+                            ans.add(x - y);
+                        } else {
+                            ans.add(x * y);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // If there were no operators, the expression is a number; parse and return it
+        if(ans.size() == 0) ans.add(Integer.parseInt(expression));
+
+        return ans;
+    }
+}
+
+// TC O(n * 2^n)
+// SC O(2^n)

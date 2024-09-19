@@ -1,0 +1,29 @@
+import java.util.Arrays;
+
+class Solution {
+    public boolean asteroidsDestroyed(int mass, int[] asteroids) {
+        // Use a long to prevent integer overflow
+        long currentMass = mass;
+        
+        // Sort the asteroids in ascending order
+        Arrays.sort(asteroids);
+        
+        // Iterate through the sorted asteroid array
+        for (int asteroid : asteroids) {
+            if (currentMass >= asteroid) {
+                // Planet destroys the asteroid and gains its mass
+                currentMass += asteroid;
+            } else {
+                // Planet is destroyed because it cannot handle the current asteroid
+                return false;
+            }
+        }
+        
+        // If we destroy all asteroids, return true
+        return true;
+    }
+}
+
+
+// TC O(nlogn)
+// SC O(n)

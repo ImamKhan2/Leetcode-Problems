@@ -1,0 +1,44 @@
+class Solution {
+    public int minExtraChar(String s, String[] dictionary) {
+        // Step 1: Create a set from the dictionary for fast lookup of words
+        Set<String> dict = new HashSet<>();
+        for (String word : dictionary) {
+            dict.add(word); // Add dictionary words to the set
+        }
+
+        // Step 2: Initialize variables
+        int n = s.length();  // Length of the input string
+        int[] dp = new int[n + 1]; // DP array to store the minimum number of extra characters
+
+        // Step 3: Initialize the dp array with a maximum value of n
+        // At worst, all characters in the string are considered extra
+        for (int i = 0; i <= n; i++) {
+            dp[i] = n; // Initially assume maximum extra characters
+        }
+        
+        dp[0] = 0; // Base case: No extra characters when there's no string (empty prefix)
+
+        // Step 4: Iterate through each character position in the string
+        for (int i = 1; i <= n; i++) {
+            // Step 5: Check all substrings ending at position 'i'
+            for (int j = 0; j < i; j++) {
+                String sub = s.substring(j, i); // Get substring s[j:i]
+                
+                // Step 6: If the substring exists in the dictionary
+                if (dict.contains(sub)) {
+                    // No extra characters needed for this substring, so update dp[i]
+                    dp[i] = Math.min(dp[i], dp[j]); // dp[j] is the state before the substring
+                }
+            }
+
+            // Step 7: Even if the substring isn't found, we consider the current character as an extra
+            dp[i] = Math.min(dp[i], dp[i - 1] + 1); // Increment by 1 to consider the current character as extra
+        }
+
+        // Step 8: Return the result from dp[n], which gives the minimum extra characters for the whole string
+        return dp[n];
+    }
+}
+
+// TC O(n^2 + m)
+// SC O(n+m)

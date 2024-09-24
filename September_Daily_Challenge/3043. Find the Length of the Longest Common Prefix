@@ -1,0 +1,42 @@
+class Solution {
+
+    public int longestCommonPrefix(int[] arr1, int[] arr2) {
+        // Step 1: Create a set to store all possible prefixes from arr1
+        HashSet<Integer> arr1Prefixes = new HashSet<Integer>();
+
+        // Build all possible prefixes from numbers in arr1
+        for (int val : arr1) {
+            // For each value in arr1, keep reducing it by removing the last digit
+            // and add the resulting value (prefix) to the set
+            while (!arr1Prefixes.contains(val) && val > 0) {
+                arr1Prefixes.add(val); // Add the current prefix to the set
+                val /= 10; // Remove the last digit to create a shorter prefix
+            }
+        }
+
+        int longestPrefix = 0; // Variable to store the longest common prefix length
+
+        // Step 2: Iterate through each number in arr2 and check for matching prefixes
+        for (int val : arr2) {
+            // For each value in arr2, keep reducing it by removing the last digit
+            // until a match is found in the set or the number becomes 0
+            while (!arr1Prefixes.contains(val) && val > 0) {
+                val /= 10; // Remove the last digit to check shorter prefix
+            }
+            // If a match is found (val > 0), calculate the length of the prefix
+            if (val > 0) {
+                // Calculate the number of digits in the matching prefix using log10
+                longestPrefix = Math.max(
+                    longestPrefix, // Keep track of the maximum prefix length found
+                    (int) Math.log10(val) + 1 // Number of digits in the matched prefix
+                );
+            }
+        }
+
+        // Return the length of the longest common prefix found
+        return longestPrefix;
+    }
+}
+
+// TC O((n + m) * D) D is the maximum number of digits in the largest number from either array.
+// Sc O(n * D)

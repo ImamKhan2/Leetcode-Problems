@@ -1,0 +1,39 @@
+class MyCalendar {
+    // A TreeMap to store booked events. Keys represent the start times and values represent the end times.
+    TreeMap<Integer, Integer> map;
+
+    // Constructor to initialize the TreeMap.
+    public MyCalendar() {   
+        map = new TreeMap<>();
+    }
+    
+    // Method to book an event in the calendar.
+    // It takes the start and end times of an event and returns true if the event can be booked without overlaps, otherwise false.
+    public boolean book(int start, int end) {
+        // Find the largest key that is less than the `end` time of the new event.
+        Integer prevVal = map.lowerKey(end);
+
+        // Check if there is an overlap with the previous event.
+        // If `prevVal` is not null, it means there is an event ending before the new event's `end`.
+        // The condition `start <= map.get(prevVal)-1` checks if the new event starts before the previous one ends.
+        // If true, it means there is an overlap and the booking is not possible.
+        if (prevVal != null && start <= map.get(prevVal) - 1) {
+            return false;  // Overlap found, return false.
+        }
+
+        // If no overlap is found, add the new event to the map with the `start` time as the key and `end` time as the value.
+        map.put(start, end);
+
+        // Return true to indicate that the booking was successful.
+        return true;
+    }
+}
+
+// TC O(log n)
+// SC O(n)
+
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * MyCalendar obj = new MyCalendar();
+ * boolean param_1 = obj.book(start,end);
+ */

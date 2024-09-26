@@ -1,0 +1,62 @@
+class Solution {
+    // First, we define a TrieNode class to represent each node in the Trie
+    class TrieNode {
+        TrieNode[] children; // Each node has 26 children corresponding to the 26 lowercase English letters
+        int count; // This stores how many words pass through this node (character)
+        
+        TrieNode() {
+            children = new TrieNode[26]; // Initialize the array for children nodes
+            count = 0; // Initialize the count to zero
+        }
+    }
+    
+    // The root node of our Trie structure
+    TrieNode root;
+
+    // Method to insert a string into the Trie
+    private void insert(String s) {
+        TrieNode node = root; // Start from the root of the Trie
+        for (char ch : s.toCharArray()) { // Traverse each character in the string
+            // If the child node corresponding to this character is null, create a new TrieNode
+            if (node.children[ch - 'a'] == null) {
+                node.children[ch - 'a'] = new TrieNode();
+            }
+            // Move to the child node
+            node = node.children[ch - 'a'];
+            // Increment the count at this node, since this character is part of a word
+            node.count += 1;
+        }
+    }
+
+    // Method to get the prefix score sum for a given string
+    private int getScoreSum(String s) {
+        TrieNode node = root; // Start from the root
+        int count = 0; // This will store the sum of counts for all characters in the prefix
+        for (char ch : s.toCharArray()) { // Traverse each character in the string
+            node = node.children[ch - 'a']; // Move to the child node for this character
+            count += node.count; // Add the count at this node to the total score
+        }
+        return count; // Return the total score for the prefix of this string
+    }
+
+    // Main function to return the sum of prefix scores for each word in the input array
+    public int[] sumPrefixScores(String[] words) {
+        root = new TrieNode(); // Initialize the root of the Trie
+        // Insert all words into the Trie
+        for (String s : words) {
+            insert(s); // Insert each word into the Trie
+        }
+        
+        int[] result = new int[words.length]; // Array to store the result for each word
+        
+        // For each word, calculate the sum of prefix scores and store it in the result array
+        for (int i = 0; i < words.length; i++) {
+            result[i] = getScoreSum(words[i]);
+        }
+        
+        return result; // Return the final result array
+    }
+}
+
+// TC O(n \times L)
+// sc O(n \times L)

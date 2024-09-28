@@ -1,0 +1,104 @@
+class MyCircularDeque {
+    int front;       // Pointer to the front element of the deque
+    int rear;        // Pointer to the rear element of the deque
+    int size;        // Current number of elements in the deque
+    int capacity;    // Maximum number of elements that the deque can hold
+    int deque[];     // Array to hold the elements of the deque
+
+    // Constructor to initialize the deque with a specified capacity `k`
+    public MyCircularDeque(int k) {
+        deque = new int[k];      // Create an array of size `k`
+        front = 0;               // Initialize front pointer to the start of the array
+        rear = k - 1;            // Initialize rear pointer to the end of the array
+        size = 0;                // Start with an empty deque
+        capacity = k;            // Set the capacity to `k`
+    }
+
+    // Insert a value at the front of the deque
+    public boolean insertFront(int value) {
+        if (isFull()) {          // Check if the deque is full
+            return false;        // If full, insertion is not possible
+        }
+        // Calculate the new front index using modulo to wrap around if necessary
+        front = (front - 1 + capacity) % capacity;
+        deque[front] = value;    // Place the new value at the new front index
+        size++;                  // Increment the size
+        return true;             // Return true to indicate successful insertion
+    }
+
+    // Insert a value at the rear of the deque
+    public boolean insertLast(int value) {
+        if (isFull()) {          // Check if the deque is full
+            return false;        // If full, insertion is not possible
+        }
+        // Calculate the new rear index using modulo to wrap around if necessary
+        rear = (rear + 1) % capacity;
+        deque[rear] = value;     // Place the new value at the new rear index
+        size++;                  // Increment the size
+        return true;             // Return true to indicate successful insertion
+    }
+
+    // Delete a value from the front of the deque
+    public boolean deleteFront() {
+        if (isEmpty()) {         // Check if the deque is empty
+            return false;        // If empty, deletion is not possible
+        }
+        // Move the front pointer forward using modulo to wrap around if necessary
+        front = (front + 1) % capacity;
+        size--;                  // Decrement the size
+        return true;             // Return true to indicate successful deletion
+    }
+
+    // Delete a value from the rear of the deque
+    public boolean deleteLast() {
+        if (isEmpty()) {         // Check if the deque is empty
+            return false;        // If empty, deletion is not possible
+        }
+        // Move the rear pointer backward using modulo to wrap around if necessary
+        rear = (rear - 1 + capacity) % capacity;
+        size--;                  // Decrement the size
+        return true;             // Return true to indicate successful deletion
+    }
+
+    // Get the front value of the deque
+    public int getFront() {
+        if (isEmpty()) {         // Check if the deque is empty
+            return -1;           // If empty, return -1
+        }
+        return deque[front];     // Return the value at the front index
+    }
+
+    // Get the rear value of the deque
+    public int getRear() {
+        if (isEmpty()) {         // Check if the deque is empty
+            return -1;           // If empty, return -1
+        }
+        return deque[rear];      // Return the value at the rear index
+    }
+
+    // Check if the deque is empty
+    public boolean isEmpty() {
+        return (size == 0);      // Deque is empty if size is 0
+    }
+
+    // Check if the deque is full
+    public boolean isFull() {
+        return (size == capacity);  // Deque is full if size equals capacity
+    }
+}
+
+/**
+ * Your MyCircularDeque object will be instantiated and called as such:
+ * MyCircularDeque obj = new MyCircularDeque(k);
+ * boolean param_1 = obj.insertFront(value);
+ * boolean param_2 = obj.insertLast(value);
+ * boolean param_3 = obj.deleteFront();
+ * boolean param_4 = obj.deleteLast();
+ * int param_5 = obj.getFront();
+ * int param_6 = obj.getRear();
+ * boolean param_7 = obj.isEmpty();
+ * boolean param_8 = obj.isFull();
+ */
+
+ // TC O(1)
+ // SC O(k), where k is the size of the deque array.

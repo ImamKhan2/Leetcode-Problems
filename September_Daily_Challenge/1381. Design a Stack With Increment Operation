@@ -1,0 +1,42 @@
+class CustomStack {
+    int stack[];
+    int index;
+
+    public CustomStack(int maxSize) {
+        stack = new int[maxSize];
+        index = -1; // Indicates that the stack is empty
+    }
+    
+    public void push(int x) {
+        if (index < stack.length - 1) {
+            index++;
+            stack[index] = x; // Push element to the stack
+        }
+    }
+    
+    public int pop() {
+        if (index >= 0) {
+            return stack[index--]; // Pop element from the stack
+        }
+        return -1; // Stack is empty
+    }
+    
+    public void increment(int k, int val) {
+        // Increment the top k elements by val
+        for (int i = 0; i < Math.min(k, index + 1); i++) { // The for loop now iterates up to Math.min(k, index + 1) to ensure we only increment existing elements in the stack.
+            stack[i] += val; // Increment the top k elements
+        }
+    }
+}
+
+// TC increment(int k, int val) operation: 𝑂(min(𝑘,𝑛))
+// TC push(int x) and pop() operations: 𝑂(1).
+// SC O(n)
+
+/**
+ * Your CustomStack object will be instantiated and called as such:
+ * CustomStack obj = new CustomStack(maxSize);
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * obj.increment(k,val);
+ */

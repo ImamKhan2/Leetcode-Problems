@@ -1,0 +1,41 @@
+class Solution {
+    public boolean canArrange(int[] arr, int k) {
+        // Create an array 'map' of size 'k' to store frequency of remainders when elements are divided by 'k'.
+        int map[] = new int[k];
+
+        // Iterate through each element in the input array 'arr'.
+        for(int element : arr) { // O(n)
+            // Calculate the remainder when 'element' is divided by 'k'.
+            // Adding 'k' and then taking modulo 'k' handles negative remainders and ensures they fall in range [0, k-1].
+            int rem = ((element % k) + k ) % k;
+
+            // Increment the count of this remainder in the 'map' array.
+            map[rem]++;
+        }
+
+        // Check if the number of elements with a remainder of 0 is even.
+        // These elements can only be paired among themselves, so their count must be even.
+        if(map[0] % 2 != 0) {
+            return false; // If odd, return false as pairing is not possible.
+        }
+
+        // Check for all other remainders if they can be paired.
+        // Iterate from remainder 1 to k/2.
+        for(int rem = 1; rem <= k/2; rem++) { // O(k/2)
+            // Calculate the complementary remainder 'comp' such that (rem + comp) % k == 0.
+            int comp = k - rem;
+
+            // Check if the frequency of the current remainder 'rem' is equal to the frequency of its complementary remainder.
+            // If they don't match, return false as pairing is not possible.
+            if(map[rem] != map[comp]) {
+                return false;
+            }
+        }
+
+        // If all conditions are met, return true indicating all elements can be paired as required.
+        return true;
+    }
+}
+
+// TC O(n + k)
+// SC O(k)

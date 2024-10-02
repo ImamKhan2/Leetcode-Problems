@@ -1,0 +1,33 @@
+class Solution {
+    public int[] arrayRankTransform(int[] arr) {
+        // Step 1: Create a copy of the array and sort it
+        // This step is necessary because we want to know the rank order of each element
+        int[] temp = arr.clone(); // Create a copy of the original array
+        Arrays.sort(temp); // Sort the copied array in ascending order
+
+        // Step 2: Create a rank mapping
+        // Use a HashMap to map each unique element to its rank
+        Map<Integer, Integer> mpp = new HashMap<>();
+        int rank = 1; // Initialize the rank counter to 1
+        for (int i : temp) { // Iterate over the sorted array
+            // If the element is not already in the map, assign it a rank
+            if (!mpp.containsKey(i)) {
+                mpp.put(i, rank++); // Map the element to the current rank and then increment the rank
+            }
+        }
+
+        // Step 3: Replace elements with their ranks
+        // Create a new array to store the ranks corresponding to the elements in the original array
+        int[] result = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            // For each element in the original array, look up its rank from the map
+            result[i] = mpp.get(arr[i]);
+        }
+
+        // Return the resulting array where each element is replaced by its rank
+        return result;
+    }
+}
+
+// TC O(nlogn)
+// SC O(n)

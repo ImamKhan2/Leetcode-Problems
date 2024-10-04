@@ -1,0 +1,90 @@
+// class Solution {
+//     public long dividePlayers(int[] skill) {
+//         int n = skill.length; // Get the number of players.
+//         int teams = n / 2; // Calculate the number of teams that can be formed.
+        
+//         // `totalsum` will store the total sum of all the skill values.
+//         int totalsum = 0;
+        
+//         // `arr` is an array that helps count the frequency of skill values.
+//         int arr[] = new int[1001]; // Assuming skill values range from 0 to 1000.
+
+//         // Calculate the frequency of each skill value and compute the total sum.
+//         for (int element : skill) {
+//             arr[element]++;
+//             totalsum += element;
+//         }
+
+//         // Check if `totalsum` can be evenly divided by the number of teams.
+//         // If not, it's impossible to divide players into balanced teams.
+//         if (totalsum % teams != 0)
+//             return -1;
+
+//         // Each team should have a target sum of `targetpoints`.
+//         int targetpoints = totalsum / teams;
+        
+//         // Variable `result` will store the sum of the products of skill levels of paired players.
+//         long result = 0;
+
+//         // Loop through each skill value to form pairs.
+//         for (int element : skill) {
+//             // If the current skill value has already been used in forming pairs, skip it.
+//             if (arr[element] == 0) {
+//                 continue;
+//             }
+
+//             // Decrease the count for the current skill value.
+//             arr[element]--;
+
+//             // Calculate the required partner skill value for the current element to reach `targetpoints`.
+//             int partner = targetpoints - element;
+
+//             // If the partner skill value is not available (i.e., count is zero), it's not possible to form a team.
+//             if (arr[partner] == 0) {
+//                 return -1;
+//             }
+
+//             // Decrease the count for the partner skill value as well.
+//             arr[partner]--;
+
+//             // Calculate the product of the paired skill values and add it to `result`.
+//             result = result + ((long) element * (long) partner);
+//         }
+
+//         // Return the final result which is the sum of products of all pairs.
+//         return result;      
+//     }
+// }
+// TC O(n)
+// SC O(1)
+
+Method 2
+
+class Solution {
+    public long dividePlayers(int[] skill) {
+        Arrays.sort(skill);
+        int left=0;
+        int right=skill.length-1;
+        int sum=skill[left]+skill[right];
+        while(left<right){
+        if(skill[left]+skill[right]==sum){
+        left++;
+        right--;
+        }else{
+            return -1;
+        }
+        }
+        left=0;
+        right=skill.length-1;
+        long productSum=0;
+        while(left<right){
+            productSum +=(long)(skill[left] * skill[right]);
+            left++;
+            right--;
+        }
+    return productSum;
+    }
+}
+
+// TC O(nlogn)
+// SC O(1)

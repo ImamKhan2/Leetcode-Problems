@@ -1,0 +1,35 @@
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        // If the length of s1 is greater than s2, then s1 cannot be a permutation of any substring of s2
+        if (s1.length() > s2.length()) { 
+            return false;
+        }
+        
+        // Create two frequency arrays to store the count of each character ('a' to 'z') for s1 and for the first window of s2
+        int[] f1 = new int[26], f2 = new int[26];
+        
+        // Populate the frequency arrays for s1 and the first s1.length() characters of s2
+        for (int i = 0; i < s1.length(); i++) {
+            f1[s1.charAt(i) - 'a']++; // Increase frequency count of character in s1
+            f2[s2.charAt(i) - 'a']++; // Increase frequency count of character in the first window of s2
+        }
+
+        // Slide the window across s2, starting from the end of the first window
+        for (int i = s1.length(); i < s2.length(); i++) {
+            // Check if the frequency arrays match, indicating a permutation of s1 in s2
+            if (Arrays.equals(f1, f2)) {
+                return true;
+            }
+            
+            // Move the window right: include the next character in s2 and exclude the leftmost character from the previous window
+            f2[s2.charAt(i) - 'a']++; // Include the new character in the frequency count
+            f2[s2.charAt(i - s1.length()) - 'a']--; // Remove the leftmost character from the previous window
+        }
+        
+        // Check one last time if the frequency arrays match for the final window position
+        return Arrays.equals(f1, f2);
+    }
+}
+
+// TC O(n)
+// SC O(1)

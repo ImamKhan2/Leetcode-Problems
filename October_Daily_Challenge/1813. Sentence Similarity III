@@ -1,0 +1,39 @@
+class Solution {
+    public boolean areSentencesSimilar(String sentence1, String sentence2) {
+        
+        // Ensure `sentence1` is not longer than `sentence2`.
+        // This allows us to treat `sentence1` as the smaller sentence and `sentence2` as the larger sentence.
+        if (sentence1.length() > sentence2.length()) {
+            return areSentencesSimilar(sentence2, sentence1);
+        }
+
+        // Split the sentences into words and store them in arrays.
+        String smallerWords[] = sentence1.split(" ");
+        String largerWords[] = sentence2.split(" ");
+
+        // Initialize pointers for comparing words from both sentences.
+        int start = 0; // Start of the words arrays.
+        int end1 = smallerWords.length - 1; // End of the smaller sentence array.
+        int end2 = largerWords.length - 1;  // End of the larger sentence array.
+
+        // Find the matching prefix words between the two sentences.
+        // Move the `start` pointer to the right until words at the same position are different.
+        while (start <= end1 && smallerWords[start].equals(largerWords[start])) {
+            start++;
+        }
+
+        // Find the matching suffix words between the two sentences.
+        // Move the `end1` and `end2` pointers to the left until words at the same position are different.
+        while (start <= end1 && smallerWords[end1].equals(largerWords[end2])) {
+            end1--;
+            end2--;
+        }
+
+        // If `start` is greater than `end1`, it means all remaining words between the pointers match.
+        // Thus, the sentences are similar, so we return true.
+        return (start > end1);
+    }
+}
+
+// Time Complexity: O(N + M) where N and M are the lengths of the two sentences.
+// Space Complexity: O(n + m) for storing the words of the two sentences in arrays.

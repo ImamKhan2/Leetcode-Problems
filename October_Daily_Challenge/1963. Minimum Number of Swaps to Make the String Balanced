@@ -1,0 +1,30 @@
+class Solution {
+    public int minSwaps(String s) {
+        int balance = 0;  // This keeps track of the number of unmatched closing brackets.
+        int swap = 0;    // Number of swaps required.
+        
+        for (char c : s.toCharArray()) {
+            // Increment balance for opening bracket, decrement for closing bracket.
+            if (c == '[') {
+                balance++;
+            } else {
+                balance--;
+            }
+            
+            // If balance goes negative, it means we have an unmatched closing bracket.
+            // We need a swap to bring in a matching opening bracket.
+            if (balance < 0) {
+                swap++;
+
+                // After a swap, we neutralize one unmatched closing bracket `]`.
+                // We do this by adding 2 to balance:
+                // 1 to remove the unmatched `]` and 1 to represent the new `[` brought in.
+                balance +=2;
+            }
+        }
+        return swap;
+    }
+}
+
+// TC O(n)
+// SC O(1)

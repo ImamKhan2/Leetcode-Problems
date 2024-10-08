@@ -1,0 +1,23 @@
+class Solution {
+    public static int minLength(String s) {
+        // Create a stack to keep track of characters
+        Stack<Character> stack = new Stack<>();
+
+        // Iterate through each character in the input string
+        for (char ch : s.toCharArray()) {
+            // If the stack is not empty and we find "AB" or "CD" substrings
+            if (!stack.isEmpty() && 
+                ((stack.peek() == 'A' && ch == 'B') || (stack.peek() == 'C' && ch == 'D'))) {
+                stack.pop();  // Remove the top element of the stack
+            } else {
+                stack.push(ch);  // Otherwise, push the current character onto the stack
+            }
+        }
+
+        // The size of the stack will be the minimum possible length of the resulting string
+        return stack.size();
+    }
+}
+
+// TC O(n)
+// SC O(n)

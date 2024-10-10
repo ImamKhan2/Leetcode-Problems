@@ -1,0 +1,33 @@
+class Solution {
+    public int maxWidthRamp(int[] nums) {
+        // Step 1: Create a stack to store indices of a decreasing sequence
+        Stack<Integer> stack = new Stack<>();
+
+        // Traverse through the array from left to right to build the monotonic decreasing stack
+        for(int i = 0; i < nums.length; i++) {
+            // Push the index onto the stack if the stack is empty or if the current element
+            // is less than the element at the index stored at the top of the stack.
+            // This ensures that `nums[stack.peek()]` will form a decreasing sequence.
+            if(stack.isEmpty() || nums[stack.peek()] > nums[i]) {
+                stack.push(i);
+            }
+        }
+
+        int maxWidth = 0; // Variable to keep track of the maximum width of the ramp found so far.
+
+        // Step 2: Traverse the array from right to left to find the maximum width ramp
+        for(int j = nums.length - 1; j >= 0; j--) {
+            // While the stack is not empty and the value at the index at the top of the stack
+            // is less than or equal to the current element `nums[j]`, we can form a ramp (i, j).
+            while(!stack.isEmpty() && nums[stack.peek()] <= nums[j]) {
+                maxWidth = Math.max(maxWidth, j - stack.pop()); // Update `maxWidth` if the current ramp is wider.
+            }
+        }
+
+        // Return the maximum width of the ramp found
+        return maxWidth;
+    }
+}
+
+// TC O(n)
+// SC O(n)

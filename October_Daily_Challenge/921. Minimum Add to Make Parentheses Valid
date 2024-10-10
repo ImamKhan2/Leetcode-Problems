@@ -1,0 +1,28 @@
+class Solution {
+    public int minAddToMakeValid(String s) {
+        // Initialize counters for tracking open and close parentheses.
+        int open = 0;  // Counts unmatched '(' parentheses.
+        int close = 0; // Counts unmatched ')' parentheses.
+
+        // Traverse through each character in the string.
+        for(char c: s.toCharArray()) {
+            if(c == '(') {
+                // If the character is '(', increment the open counter as it needs to be closed.
+                open++;
+            } else if(c == ')' && open > 0) {
+                // If the character is ')' and there are unmatched '(', it means we can balance one '(', so decrement open.
+                open--;
+            } else {
+                // If the character is ')' and there are no unmatched '(', it means this ')' is unbalanced, so increment close.
+                close++;
+            }
+        }
+
+        // The total number of parentheses needed to balance the string will be
+        // the sum of unmatched '(' (open) and unmatched ')' (close).
+        return open + close;
+    }
+}
+
+// TC O(n)
+// SC O(1)

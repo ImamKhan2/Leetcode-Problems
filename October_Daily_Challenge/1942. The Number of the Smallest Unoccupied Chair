@@ -1,0 +1,31 @@
+class Solution {
+    public int smallestChair(int[][] times, int targetFriend) {
+        // Get the arrival and leaving time of the target friend
+        int[] targetTime = times[targetFriend];
+        
+        // Sort the times array based on the arrival time (first element of each array)
+        Arrays.sort(times, (a, b) -> Integer.compare(a[0], b[0]));
+
+        int n = times.length; // Number of friends
+        int[] chairTime = new int[n]; // Array to store the time when each chair becomes free
+
+        // Iterate over all the friends' times
+        for (int[] time : times) {
+            // Check each chair to find the first available one
+            for (int i = 0; i < n; i++) {
+                // If the chair is free at the current friend's arrival time
+                if (chairTime[i] <= time[0]) {
+                    // Assign this chair to the current friend, update the chair's free time
+                    chairTime[i] = time[1]; // The chair will be free again after the friend leaves
+                    // If the current friend is the target friend, return the chair number
+                    if (Arrays.equals(time, targetTime)) return i;
+                    break; // Move to the next friend after assigning a chair
+                }
+            }
+        }
+        return 0; // Default return value, should not reach here in correct input cases
+    }
+}
+
+// TC O(n^2)
+// SC O(n)

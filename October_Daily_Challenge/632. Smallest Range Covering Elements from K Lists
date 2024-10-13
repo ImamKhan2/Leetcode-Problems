@@ -1,0 +1,68 @@
+class Solution {
+    public int[] smallestRange(List<List<Integer>> nums) {
+        List<int[]> merged = new ArrayList<>();
+        
+        // Step 1: Merge all lists into one list along with their corresponding list indices
+        // Loop through each list in 'nums'
+        for (int i = 0; i < nums.size(); i++) {
+            // Loop through each number in the current list and add it to the merged list
+            // Each number is stored along with its corresponding list index (i)
+            for (int num : nums.get(i)) {
+                merged.add(new int[] { num, i });
+            }
+        }
+
+        // Step 2: Sort the merged list by the values of the numbers
+        // This ensures we can process the numbers in increasing order of their values
+        merged.sort(Comparator.comparingInt(a -> a[0]));
+
+        // Step 3: Use two pointers technique to track the smallest range
+        // Initialize a frequency map to keep track of how many numbers from each list are in the current window
+        Map<Integer, Integer> freq = new HashMap<>();
+        int left = 0, count = 0;  // 'left' is the left pointer, 'count' tracks how many lists are represented in the current window
+        int rangeStart = 0, rangeEnd = Integer.MAX_VALUE;  // Initialize the result range with a large initial range
+
+        // Step 4: Expand the window using the 'right' pointer
+        for (int right = 0; right < merged.size(); right++) {
+            // Add the current number's list index to the frequency map
+            freq.put(
+                merged.get(right)[1], 
+                freq.getOrDefault(merged.get(right)[1], 0) + 1
+            );
+
+            // If the current list index was not already in the window, increase the count
+            if (freq.get(merged.get(right)[1]) == 1) count++;
+
+            // Step 5: Shrink the window from the left when all lists are represented in the current window
+            while (count == nums.size()) {
+                // Calculate the current range
+                int curRange = merged.get(right)[0] - merged.get(left)[0];
+                
+                // If the current range is smaller than the best found range, update the result
+                if (curRange < rangeEnd - rangeStart) {
+                    rangeStart = merged.get(left)[0];
+                    rangeEnd = merged.get(right)[0];
+                }
+
+                // Remove the leftmost element from the window and update the frequency map
+                freq.put(
+                    merged.get(left)[1],
+                    freq.get(merged.get(left)[1]) - 1
+                );
+
+                // If removing this element causes one list to no longer be represented, decrease the count
+                if (freq.get(merged.get(left)[1]) == 0) count--;
+
+                // Move the left pointer to shrink the window
+                left++;
+            }
+        }
+
+        // Step 6: Return the smallest range found
+        return new int[] { rangeStart, rangeEnd };
+    }
+}
+
+
+// TC O(nlogn)
+// SC O(n)

@@ -1,0 +1,40 @@
+class Solution {
+    public long maxKelements(int[] nums, int k) {
+        // Create a max-heap using a priority queue
+        // This will help in extracting the maximum element efficiently
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+        // Get the length of the input array
+        int n = nums.length;
+
+        // Add all elements from the nums array to the priority queue (max-heap)
+        for (int i = 0; i < n; i++) {
+            pq.offer(nums[i]); // Insert each number into the max-heap
+        }
+
+        // Initialize the score to accumulate the values we extract from the heap
+        long score = 0;
+
+        // Perform k operations
+        while (k > 0) {
+            // Extract the maximum element from the heap
+            int val = pq.poll();
+
+            // Add the maximum value to the score
+            score += val;
+
+            // Compute the new value by taking the ceiling of val/3
+            // Then add this new value back to the max-heap
+            pq.offer((int) Math.ceil(val / 3.0));
+
+            // Decrement k to indicate one operation is complete
+            k--;
+        }
+
+        // Return the total score after k operations
+        return score;
+    }
+}
+
+// TC O((n+k)logn)
+// SC O(n)

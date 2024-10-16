@@ -1,0 +1,30 @@
+class Solution {
+    // This method calculates the minimum number of swaps required
+    // to move all '0's (representing white) to the left side of the string
+    // and all '1's (representing black) to the right side of the string.
+    public long minimumSteps(String s) {
+        long swap = 0;  // This variable will store the total number of swaps.
+        long black = 0; // This variable counts the number of '1's encountered (black elements).
+
+        // Loop through each character in the string.
+        for (int i = 0; i < s.length(); i++) {
+            // If the character is '0' (white), it means that to move it to the left
+            // side (behind all the '1's seen so far), we need to swap it with
+            // all the '1's (black) that are currently ahead of it.
+            if (s.charAt(i) == '0') {
+                // Add the current count of black (1's) to the swap count, as these
+                // are the number of swaps needed to move this '0' past all the '1's.
+                swap += black;
+            } else {
+                // If the character is '1', just increment the black count,
+                // because this '1' might be swapped later with a '0'.
+                black++;
+            }
+        }
+        // Return the total number of swaps needed.
+        return swap;
+    }
+}
+
+// TC O(n)
+// SC O(1)

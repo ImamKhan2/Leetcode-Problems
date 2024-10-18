@@ -3,7 +3,7 @@ class Solution {
         // Convert the number to a string representation for easier manipulation of digits
         StringBuilder str = new StringBuilder(Integer.toString(num));
         int n = str.length();
-        
+    
         // Array to store the index of the maximum digit from the right up to the current position
         int[] maxInd = new int[n];
 

@@ -1,35 +1,33 @@
 class Solution {
     public int maxUniqueSplit(String s) {
-        // Create a set to store unique substrings
-        Set<String> uniqueSubstrings = new HashSet<>();
+        Set<String> used = new HashSet<>();
+        return splitHelper(s, 0, used);
+    }
+    
+    private int splitHelper(String s, int start, Set<String> used) {
+        if (start == s.length()) {
+            return 0;
+        }
         
-        // StringBuilder to keep track of the current substring being built
-        StringBuilder currentSubstring = new StringBuilder();
-
-        // Iterate through each character in the input string `s`
-        for(char ch : s.toCharArray()) {
-            // Append the current character to the substring
-            currentSubstring.append(ch);
+        int maxCount = 0;
+        
+        // Try forming every possible substring starting from 'start'
+        for (int end = start + 1; end <= s.length(); end++) {
+            String sub = s.substring(start, end);
             
-            // If the current substring is not already in the set of unique substrings
-            if (!uniqueSubstrings.contains(currentSubstring.toString())) {
-                // Add the current substring to the set of unique substrings
-                uniqueSubstrings.add(currentSubstring.toString());
-                
-                // Clear the current substring (start fresh for next potential substring)
-                currentSubstring.setLength(0);
+            // If the substring is not already used
+            if (!used.contains(sub)) {
+                used.add(sub);  // Mark the substring as used
+                // Recursively split the rest of the string and count
+                int count = 1 + splitHelper(s, end, used);
+                maxCount = Math.max(maxCount, count);  // Take the maximum count
+                used.remove(sub);  // Backtrack to try other possibilities
             }
         }
         
-        // If there's any remaining substring left after the loop, add it to the set
-        if (currentSubstring.length() > 0) {
-            uniqueSubstrings.add(currentSubstring.toString());
-        }
-        
-        // Return the total number of unique substrings found
-        return uniqueSubstrings.size();
+        return maxCount;
     }
 }
 
-// TC O(n)
+// TC O(2^n)
 // SC O(n)

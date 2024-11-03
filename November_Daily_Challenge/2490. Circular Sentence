@@ -1,0 +1,28 @@
+class Solution {
+    public boolean isCircularSentence(String sentence) {
+        // Get the length of the sentence
+        int n = sentence.length();
+
+        // Check if the first and last characters are the same
+        // If they are not, then the sentence can't be circular
+        if (sentence.charAt(0) != sentence.charAt(n - 1))
+            return false;
+
+        // Loop through the sentence, starting from the second character (i = 1) to the second last character (i < n-1)
+        for (int i = 1; i < n - 1; i++) {
+            // Check if the current character is a space
+            if (sentence.charAt(i) == ' ') {
+                // If there's a space, check if the character before the space is the same as the character after the space
+                // If they are not the same, then the sentence can't be circular
+                if (sentence.charAt(i - 1) != sentence.charAt(i + 1)) {
+                    return false;
+                }
+            }
+        }
+        // If all checks pass, the sentence is circular
+        return true;
+    }
+}
+
+// TC O(n)
+// SC O(1)

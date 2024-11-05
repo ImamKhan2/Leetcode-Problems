@@ -1,0 +1,30 @@
+class Solution {
+    public String compressedString(String word) {
+        // Initialize a StringBuilder to build the compressed result
+        StringBuilder sb = new StringBuilder();
+        
+        // Initialize a count to keep track of consecutive occurrences of each character
+        int count = 1;
+
+        // Iterate through each character in the string, starting from the second character (index 1)
+        for (int i = 1; i <= word.length(); i++) {
+            // Check if we are at the end of the string, or if the current character is different
+            // from the previous character, or if the count has reached 9
+            if (i == word.length() || word.charAt(i) != word.charAt(i - 1) || count == 9) {
+                // Append the count and the character to the compressed result
+                sb.append(count).append(word.charAt(i - 1));
+                
+                // Reset the count for the next new character sequence
+                count = 1;
+            } else {
+                // If the current character is the same as the previous one, increase the count
+                count++;
+            }
+        }
+        
+        // Convert the StringBuilder to a String and return the compressed result
+        return sb.toString();
+    }
+}
+// TC O(n)
+// SC O(n)

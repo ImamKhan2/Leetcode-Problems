@@ -1,0 +1,22 @@
+class Solution {
+    public int minChanges(String s) {
+        // Initialize a counter to track the minimum number of changes needed.
+        int min = 0;
+
+        // Loop through the string in steps of 2, checking each pair of consecutive characters.
+        // We stop at length - 1 to avoid out-of-bounds errors.
+        for (int i = 0; i < s.length() - 1; i += 2) {
+            // If the current character is not equal to the next character,
+            // it means we need to change one of them to make them equal.
+            if (s.charAt(i) != s.charAt(i + 1)) {
+                min = min + 1; // Increment the counter for each required change.
+            }
+        }
+
+        // Return the total number of changes needed.
+        return min;
+    }
+}
+
+// TC O(n)
+// SC O(1)

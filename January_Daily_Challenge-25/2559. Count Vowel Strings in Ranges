@@ -1,0 +1,50 @@
+class Solution {
+    public int[] vowelStrings(String[] words, int[][] queries) {
+        // Initialize the result array to store answers for each query
+        int[] ans = new int[queries.length];
+
+        // Create a HashSet of vowels for quick lookup
+        HashSet<Character> vowels = new HashSet<>(
+            Arrays.asList('a', 'e', 'i', 'o', 'u')
+        );
+
+        // Array to store prefix sums of valid words (vowel strings)
+        int[] prefixSum = new int[words.length];
+
+        // Variable to keep track of the cumulative sum
+        int sum = 0;
+
+        // Build the prefix sum array
+        for (int i = 0; i < words.length; i++) {
+            String currentWord = words[i];
+
+            // Check if the current word starts and ends with a vowel
+            if (
+                vowels.contains(currentWord.charAt(0)) && // Check first character
+                vowels.contains(currentWord.charAt(currentWord.length() - 1)) // Check last character
+            ) {
+                sum++; // Increment the count of valid words
+            }
+
+            // Store the cumulative sum in the prefix sum array
+            prefixSum[i] = sum;
+        }
+
+        // Process each query to calculate the result
+        for (int i = 0; i < queries.length; i++) {
+            int[] currentQuery = queries[i]; // Get the current query
+            int start = currentQuery[0];    // Starting index of the range
+            int end = currentQuery[1];      // Ending index of the range
+
+            // Calculate the number of valid words in the range [start, end]
+            ans[i] = prefixSum[end] - (start == 0 ? 0 : prefixSum[start - 1]);
+            // If the start is 0, there's no need to subtract anything (use 0)
+        }
+
+        // Return the array of answers for all queries
+        return ans;
+    }
+}
+
+// TC O(n)
+// SC O(1)

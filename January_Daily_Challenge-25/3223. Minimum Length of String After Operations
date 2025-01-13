@@ -1,7 +1,7 @@
 class Solution {
     public int minimumLength(String s) {
         int[] charFrequency = new int[26];
-        int totalLength = 0;
+        int totalLength = 0; 
         for (char c : s.toCharArray()) {
             charFrequency[c - 'a']++;
         }

@@ -14,7 +14,7 @@ class Solution {
         for (int[] event : events) {
             // Poll all valid events from queue and take their maximum.
             while (!pq.isEmpty() && pq.peek().getKey() < event[0]) {
-                maxVal = Math.max(maxVal, pq.peek().getValue());
+                maxVal = Math.max(maxVal, pq.peek().getValue()); 
                 pq.poll();
             }
 

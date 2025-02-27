@@ -1,0 +1,36 @@
+class Solution {
+    public int maxAbsoluteSum(int[] nums) {
+        int max = 0;  // To store the maximum subarray sum
+        int min = 0;  // To store the minimum subarray sum
+        int sum = 0;  // Variable to keep track of the current sum
+        
+        // Finding the maximum subarray sum using Kadane's Algorithm
+        for(int i = 0; i < nums.length; i++){
+            if(sum < 0){
+                sum = 0;  // Reset sum if it becomes negative
+            }
+            sum += nums[i];  // Add current element to sum
+            
+            max = Math.max(sum, max);  // Update max if current sum is greater
+        }
+        
+        // Reset sum to find the minimum subarray sum
+        sum = 0;
+        
+        // Finding the minimum subarray sum (Kadane's Algorithm for min sum)
+        for(int i = 0; i < nums.length; i++){
+            if(sum > 0){
+                sum = 0;  // Reset sum if it becomes positive
+            }
+            sum += nums[i];  // Add current element to sum
+            
+            min = Math.min(sum, min);  // Update min if current sum is smaller
+        }
+        
+        // The maximum absolute sum will be the maximum of |max| and |min|
+        return Math.max(max, Math.abs(min));
+    }
+}
+
+// TC O(n)
+// SC O(1)

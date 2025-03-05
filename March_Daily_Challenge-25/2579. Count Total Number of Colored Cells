@@ -1,0 +1,22 @@
+class Solution {
+    public long coloredCells(int n) {
+        // // Method 1
+        // if(n==1) return 1;
+        // return 2L * n * (n-1) + 1; // L -> To prevent overflow
+
+        // Method 2
+        long sum = 1; // Initial number of colored cells
+        for(int i=2; i<=n; i++){
+            sum+=(i-1)*4; // Increment by 4 times the previous level
+        }
+        return sum;
+        // TC O(n)
+        // SC O(1)
+
+        // // Method3
+        // return 1+(long)2*n*(n-1);
+    }
+}
+
+// TC O(1)
+// SC O(1)

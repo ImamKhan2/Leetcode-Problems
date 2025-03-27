@@ -1,6 +1,6 @@
 class Solution {
     public boolean checkPowersOfThree(int n) {
-        while(n>0){
+        while(n>0){ 
             if(n % 3 == 2) return false; // if 2 it cant check the desired value 
             n /= 3;  //  to check the power values 
         }

@@ -5,7 +5,7 @@ class Solution {
             runningSum += arr[i];
             expectedSum += i;
             if (runningSum == expectedSum) {  
-                chunks++;
+                chunks++; 
             }
         }
         return chunks;

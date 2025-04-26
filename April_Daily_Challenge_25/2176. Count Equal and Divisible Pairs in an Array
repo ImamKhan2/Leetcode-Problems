@@ -7,7 +7,7 @@ class Solution {
                 if((i * j)%k == 0 && nums[i] == nums[j]){
                     res++;
                 }
-            }
+            } 
         }
         return res;
     }

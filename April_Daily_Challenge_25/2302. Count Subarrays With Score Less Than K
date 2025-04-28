@@ -1,0 +1,29 @@
+public class Solution {
+    public long countSubarrays(int[] nums, long k) {
+        int n = nums.length;
+        int left = 0;          // Left pointer of the sliding window
+        long windowSum = 0;    // Sum of elements in the current window
+        long count = 0;        // To store the total number of valid subarrays
+
+        for (int right = 0; right < n; right++) {
+            // Expand the window by adding nums[right] to windowSum
+            windowSum += nums[right];
+
+            // Shrink the window from the left if the score >= k
+            // score = windowSum * windowLength
+            while (windowSum * (right - left + 1) >= k) {
+                windowSum -= nums[left]; // Remove nums[left] from the window
+                left++;                  // Move the left pointer to the right
+            }
+
+            // After adjusting, all subarrays ending at 'right' and starting from 'left' to 'right' are valid
+            count += (right - left + 1);
+        }
+
+        // Return the total number of valid subarrays
+        return count;
+    }
+}
+
+// TC O(n)
+// SC O(1)

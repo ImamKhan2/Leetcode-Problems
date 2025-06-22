@@ -1,0 +1,16 @@
+class Solution {
+    public String[] divideString(String s, int k, char fill) {
+        while(s.length()%k!=0){
+            s = s + fill;
+        }
+        int size = s.length()/k;
+        String ans[] = new String[size];
+        for(int i=0; i<size; i++){
+            ans[i] = s.substring(i*k, (i+1)*k);
+        }
+        return ans;
+    }
+}
+
+// TC O(n)
+// SC O(n)

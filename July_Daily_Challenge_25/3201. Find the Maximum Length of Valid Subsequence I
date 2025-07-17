@@ -1,0 +1,27 @@
+class Solution {
+    public int maximumLength(int[] nums) {
+        // 'c' stores the expected parity (0 for even, 1 for odd)
+        int c = nums[0] % 2;
+        int odd = 0;   // Count of odd numbers
+        int even = 0;  // Count of even numbers
+        int both = 0;  // Count of longest alternating parity subsequence (starting with nums[0] parity)
+        for (int num : nums) {
+            // Count even numbers
+            if (num % 2 == 0) {
+                even++;
+            } else {
+                odd++; // Count odd numbers
+            }
+            // Check if the current number matches the expected parity
+            if (num % 2 == c) {
+                both++;       // Include in alternating sequence
+                c = 1 - c;    // Toggle expected parity (0 becomes 1, 1 becomes 0)
+            }
+        }
+        // Return the maximum of the three sequences
+        return Math.max(both, Math.max(even, odd));
+    }
+}
+
+// TC O(n)
+// SC O(1)

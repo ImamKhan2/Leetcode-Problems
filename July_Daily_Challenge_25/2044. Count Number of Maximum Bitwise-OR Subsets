@@ -1,0 +1,37 @@
+class Solution {
+    public int countMaxOrSubsets(int[] nums) {
+        int n = nums.length;
+        
+        // Step 1: Find the maximum possible OR value
+        int maxOr = 0;
+        for (int num : nums) {
+            maxOr |= num;
+        }
+        
+        int count = 0;
+
+        // Step 2: Iterate through all subsets using bitmasking
+        int totalSubsets = 1 << n;  // 2^n subsets
+        for (int mask = 1; mask < totalSubsets; mask++) {
+            int currentOr = 0;
+            
+            // Step 3: For each subset (represented by `mask`), calculate the OR
+            for (int i = 0; i < n; i++) {
+                if ((mask & (1 << i)) != 0) { // If the i-th bit is set, include nums[i]
+                    currentOr |= nums[i];
+                }
+            }
+            
+            // Step 4: If the OR matches the maximum OR, increment the count
+            if (currentOr == maxOr) {
+                count++;
+            }
+        }
+        
+        return count;
+    }
+}
+
+// TC O(n * 2n)
+// SC O(n)
+

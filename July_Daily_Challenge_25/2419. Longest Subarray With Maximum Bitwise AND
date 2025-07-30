@@ -1,0 +1,29 @@
+class Solution {
+    public int longestSubarray(int[] nums) {
+        int maxValue = 0;
+        // Step 1: Find the maximum value in the array
+        for (int num : nums) {
+            maxValue = Math.max(maxValue, num);
+        }
+        
+        int maxLength = 0;
+        int count = 0;
+        
+        // Step 2: Find the longest subarray where all elements are equal to maxValue
+        for (int num : nums) {
+            if (num == maxValue) {
+                // If the current number is equal to maxValue, increase current length
+                count++;
+                maxLength = Math.max(maxLength, count);
+            } else {
+                // Reset the current length when the number is not equal to maxValue
+                count = 0;
+            }
+        }
+        
+        return maxLength;
+    }
+}
+
+// TC O(n)
+// SC O(1)

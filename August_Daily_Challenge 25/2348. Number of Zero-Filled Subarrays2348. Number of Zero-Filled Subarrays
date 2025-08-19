@@ -1,0 +1,19 @@
+class Solution {
+    public long zeroFilledSubarray(int[] nums) {
+        long ans = 0;
+        long currStreak = 0;
+
+        for(int num : nums){
+            if(num == 0){
+                currStreak++; // Increment the streak length
+                ans += currStreak; // Add the streak contribution
+            }else{
+                currStreak = 0; // Reset the streak when non-zero is found
+            }
+        }
+        return ans;
+    }
+}
+
+// TC O(n)
+// SC O(1)
